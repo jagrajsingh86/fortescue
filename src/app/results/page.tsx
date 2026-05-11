@@ -47,39 +47,60 @@ export default function ResultsPage() {
     const el = reportRef.current;
     if (!el) return;
     setExporting(true);
+
     const originalBg = el.style.background;
     const originalPadding = el.style.padding;
     el.style.background = "#000028";
     el.style.padding = "32px";
+
     try {
-      const mod = (await import("html2pdf.js")) as unknown as {
-        default?: unknown;
-      };
-      // html2pdf.js can expose itself either as `mod.default` or as the
-      // namespace itself depending on the bundler — handle both shapes.
-      const factory = (mod.default ?? mod) as () => {
-        set: (o: Record<string, unknown>) => {
-          from: (e: HTMLElement) => { save: () => Promise<void> };
-        };
-      };
+      const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
+        import("html2canvas-pro"),
+        import("jspdf"),
+      ]);
+
+      const canvas = await html2canvas(el, {
+        backgroundColor: "#000028",
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        windowWidth: el.scrollWidth,
+      });
+
+      const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
+      const pageWidthMm = pdf.internal.pageSize.getWidth();
+      const pageHeightMm = pdf.internal.pageSize.getHeight();
+      const marginMm = 10;
+      const innerWidthMm = pageWidthMm - marginMm * 2;
+      const innerHeightMm = pageHeightMm - marginMm * 2;
+      const pxPerMm = canvas.width / innerWidthMm;
+      const pageHeightPx = Math.floor(innerHeightMm * pxPerMm);
+
+      let yOffset = 0;
+      let pageIndex = 0;
+      while (yOffset < canvas.height) {
+        if (pageIndex > 0) pdf.addPage();
+
+        const sliceHeight = Math.min(pageHeightPx, canvas.height - yOffset);
+        const pageCanvas = document.createElement("canvas");
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = sliceHeight;
+        const ctx = pageCanvas.getContext("2d");
+        if (!ctx) throw new Error("Could not allocate 2D canvas context");
+        ctx.fillStyle = "#000028";
+        ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        ctx.drawImage(canvas, 0, -yOffset);
+
+        const imgData = pageCanvas.toDataURL("image/jpeg", 0.95);
+        const sliceHeightMm = sliceHeight / pxPerMm;
+        pdf.addImage(imgData, "JPEG", marginMm, marginMm, innerWidthMm, sliceHeightMm);
+
+        yOffset += pageHeightPx;
+        pageIndex++;
+      }
+
       const filename = `AI-Maturity-Assessment-${(clientName || "Report").replace(/\s+/g, "-")}.pdf`;
-      await factory()
-        .set({
-          margin: [10, 10, 10, 10],
-          filename,
-          image: { type: "jpeg", quality: 0.95 },
-          html2canvas: {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: "#000028",
-            windowWidth: el.scrollWidth,
-            logging: false,
-          },
-          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-          pagebreak: { mode: ["css", "legacy"] },
-        })
-        .from(el)
-        .save();
+      pdf.save(filename);
     } catch (err) {
       console.error("PDF export failed", err);
       const msg = err instanceof Error ? err.message : "Unknown error";
