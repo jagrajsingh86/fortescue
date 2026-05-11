@@ -69,9 +69,18 @@ export async function POST(req: NextRequest) {
       config: {
         responseMimeType: "application/json",
         temperature: 0.6,
-        maxOutputTokens: 4096,
+        maxOutputTokens: 16384,
+        thinkingConfig: { thinkingBudget: 2048 },
       },
     });
+
+    const finishReason = response.candidates?.[0]?.finishReason;
+    if (finishReason && finishReason !== "STOP") {
+      throw new Error(
+        `Model stopped before completing the response (${finishReason}). ` +
+          `Try a smaller model via GEMINI_MODEL or raise maxOutputTokens.`
+      );
+    }
 
     const text = response.text ?? "";
     const clean = text.replace(/```json|```/g, "").trim();
