@@ -48,11 +48,6 @@ export default function ResultsPage() {
     if (!el) return;
     setExporting(true);
 
-    const originalBg = el.style.background;
-    const originalPadding = el.style.padding;
-    el.style.background = "#000028";
-    el.style.padding = "32px";
-
     try {
       const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
         import("html2canvas-pro"),
@@ -65,6 +60,15 @@ export default function ResultsPage() {
         useCORS: true,
         logging: false,
         windowWidth: el.scrollWidth,
+        onclone: (_doc, clonedEl) => {
+          // The cloned root is the wrapper html2canvas-pro renders into;
+          // walk up if needed and add our PDF-mode class to the captured
+          // node so the brightness overrides take effect for the snapshot
+          // without touching the live DOM.
+          clonedEl.classList.add("pdf-export-mode");
+          clonedEl.style.background = "#000028";
+          clonedEl.style.padding = "32px";
+        },
       });
 
       const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
@@ -91,9 +95,9 @@ export default function ResultsPage() {
         ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
         ctx.drawImage(canvas, 0, -yOffset);
 
-        const imgData = pageCanvas.toDataURL("image/jpeg", 0.95);
+        const imgData = pageCanvas.toDataURL("image/png");
         const sliceHeightMm = sliceHeight / pxPerMm;
-        pdf.addImage(imgData, "JPEG", marginMm, marginMm, innerWidthMm, sliceHeightMm);
+        pdf.addImage(imgData, "PNG", marginMm, marginMm, innerWidthMm, sliceHeightMm);
 
         yOffset += pageHeightPx;
         pageIndex++;
@@ -106,8 +110,6 @@ export default function ResultsPage() {
       const msg = err instanceof Error ? err.message : "Unknown error";
       window.alert(`PDF export failed: ${msg}`);
     } finally {
-      el.style.background = originalBg;
-      el.style.padding = originalPadding;
       setExporting(false);
     }
   }
