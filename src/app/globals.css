@@ -1,26 +1,84 @@
 @import "tailwindcss";
 
+@theme {
+  --color-cog-navy: #000048;
+  --color-cog-bg: #00003a;
+  --color-cog-deep: #000028;
+  --color-cog-teal: #06C7CC;
+  --color-cog-blue: #2F78C4;
+  --color-cog-purple: #2E308E;
+  --color-cog-lilac: #7373D8;
+  --color-cog-lightblue: #92BBE6;
+  --color-cog-cyan: #35CACF;
+  --color-cog-red: #E84855;
+  --color-cog-amber: #F5A623;
+
+  --font-sans: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(ellipse at top, #00003a 0%, #000028 60%, #000018 100%) fixed;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
+
+* {
+  border-radius: 0 !important;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  border-radius: 0 !important;
+}
+
+/* Top gradient progress bar */
+.cog-progress-track {
+  background: rgba(255, 255, 255, 0.06);
+}
+.cog-progress-fill {
+  background: linear-gradient(90deg, #06C7CC, #7373D8);
+  transition: width 400ms ease;
+}
+
+/* Shimmer for skeleton */
+@keyframes cog-shimmer {
+  0%   { background-position: -800px 0; }
+  100% { background-position: 800px 0; }
+}
+.cog-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(6, 199, 204, 0.10) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  background-size: 800px 100%;
+  animation: cog-shimmer 1.8s linear infinite;
+}
+
+@keyframes cog-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+.cog-pulse { animation: cog-pulse 1.6s ease-in-out infinite; }
+
+@keyframes cog-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.cog-fade-up { animation: cog-fade-up 350ms ease-out both; }
+
+/* Selection */
+::selection { background: rgba(6, 199, 204, 0.4); color: #fff; }

@@ -1,65 +1,145 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { CognizantLogo } from "@/components/CognizantLogo";
+import { Footer } from "@/components/Footer";
+import { ProgressBar } from "@/components/ProgressBar";
+import { PILLARS } from "@/lib/pillars";
+import { clearSession, saveSession } from "@/lib/session";
+
+export default function LandingPage() {
+  const router = useRouter();
+  const [clientName, setClientName] = useState("");
+  const [industry, setIndustry] = useState("");
+
+  function begin() {
+    clearSession();
+    saveSession({
+      answers: {},
+      clientName: clientName.trim() || undefined,
+      industry: industry.trim() || undefined,
+      current: 0,
+    });
+    router.push("/assessment");
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <>
+      <ProgressBar value={0} max={1} />
+
+      <header className="px-6 sm:px-10 pt-6 flex items-center justify-between">
+        <CognizantLogo size={28} />
+        <span className="text-[11px] uppercase tracking-[0.22em] text-white/45">
+          AI Maturity Assessment
+        </span>
+      </header>
+
+      <main className="flex-1 px-6 sm:px-10 py-12 sm:py-20 max-w-5xl w-full mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-20 items-start">
+          <div className="cog-fade-up">
+            <div className="text-[11px] uppercase tracking-[0.24em] text-[#06C7CC] mb-5">
+              5 pillars · 15 questions · ~5 minutes
+            </div>
+            <h1 className="text-white font-light text-[42px] sm:text-[54px] leading-[1.05] tracking-tight mb-6">
+              AI Maturity
+              <br />
+              Assessment
+            </h1>
+            <p className="text-white/70 text-[17px] leading-relaxed font-light max-w-xl mb-10">
+              Evaluate your organisation&rsquo;s AI readiness across five
+              strategic pillars. Receive a personalised analysis and a
+              transformation roadmap grounded in Cognizant&rsquo;s BASIS
+              methodology — generated in real time by Claude.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mb-10">
+              <Field
+                label="Client / Organisation"
+                placeholder="e.g. Fortescue"
+                value={clientName}
+                onChange={setClientName}
+              />
+              <Field
+                label="Industry"
+                placeholder="e.g. Mining & Resources"
+                value={industry}
+                onChange={setIndustry}
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={begin}
+              className="px-7 py-3.5 text-[13px] uppercase tracking-[0.2em] font-semibold transition-all"
+              style={{
+                background: "#06C7CC",
+                color: "#000028",
+              }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+              Begin Assessment →
+            </button>
+          </div>
+
+          <div className="cog-fade-up" style={{ animationDelay: "120ms" }}>
+            <div className="text-[10px] uppercase tracking-[0.24em] text-white/45 mb-4">
+              The Five Pillars
+            </div>
+            <ul className="flex flex-col">
+              {PILLARS.map((p) => (
+                <li
+                  key={p.id}
+                  className="flex items-baseline gap-5 py-4 px-5"
+                  style={{
+                    borderTop: "1px solid rgba(255,255,255,0.06)",
+                    borderLeft: `3px solid ${p.accent}`,
+                    background: "rgba(255,255,255,0.02)",
+                  }}
+                >
+                  <span
+                    className="text-[11px] font-bold tracking-[0.18em]"
+                    style={{ color: p.accent }}
+                  >
+                    {p.num}
+                  </span>
+                  <span className="text-white text-[15px] tracking-wide">
+                    {p.name}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </main>
-    </div>
+
+      <Footer />
+    </>
+  );
+}
+
+function Field({
+  label,
+  placeholder,
+  value,
+  onChange,
+}: {
+  label: string;
+  placeholder: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <label className="flex flex-col gap-1.5">
+      <span className="text-[10px] uppercase tracking-[0.22em] text-white/50">
+        {label}
+      </span>
+      <input
+        type="text"
+        value={value}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        className="bg-white/[0.04] border border-white/10 px-4 py-3 text-white text-[15px] font-light outline-none focus:border-[#06C7CC] transition-colors"
+      />
+    </label>
   );
 }
