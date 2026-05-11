@@ -6,6 +6,7 @@ interface SessionData {
   answers: AssessmentAnswers;
   clientName?: string;
   industry?: string;
+  context?: string;
   current?: number;
 }
 

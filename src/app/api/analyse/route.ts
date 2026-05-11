@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { PILLARS } from "@/lib/pillars";
 import { getAllPillarScores, getBand, getOverallScore } from "@/lib/scoring";
 import { buildPrompt } from "@/lib/prompt";
@@ -20,6 +20,7 @@ interface Body {
   answers: AssessmentAnswers;
   clientName?: string;
   industry?: string;
+  context?: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -27,12 +28,18 @@ export async function POST(req: NextRequest) {
   try {
     body = (await req.json()) as Body;
   } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
-  const { answers, clientName, industry } = body;
+  const { answers, clientName, industry, context } = body;
   if (!answers || typeof answers !== "object" || Object.keys(answers).length === 0) {
-    return NextResponse.json({ error: "Missing answers" }, { status: 400 });
+    return new Response(JSON.stringify({ error: "Missing answers" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   const overall = getOverallScore(answers);
@@ -55,53 +62,59 @@ export async function POST(req: NextRequest) {
   const prompt = buildPrompt({
     clientName,
     industry,
+    context,
     overall,
     overallBand,
     pillarScores,
     selectedAnswers,
   });
 
+  let ai: GoogleGenAI;
   try {
-    const ai = getClient();
-    const response = await ai.models.generateContent({
-      model: MODEL,
-      contents: prompt,
-      config: {
-        responseMimeType: "application/json",
-        temperature: 0.6,
-        maxOutputTokens: 16384,
-        thinkingConfig: { thinkingBudget: 2048 },
-      },
-    });
-
-    const finishReason = response.candidates?.[0]?.finishReason;
-    if (finishReason && finishReason !== "STOP") {
-      throw new Error(
-        `Model stopped before completing the response (${finishReason}). ` +
-          `Try a smaller model via GEMINI_MODEL or raise maxOutputTokens.`
-      );
-    }
-
-    const text = response.text ?? "";
-    const clean = text.replace(/```json|```/g, "").trim();
-    const start = clean.indexOf("{");
-    const end = clean.lastIndexOf("}");
-    if (start === -1 || end === -1) {
-      throw new Error("Model response did not include valid JSON.");
-    }
-    const analysis = JSON.parse(clean.slice(start, end + 1));
-
-    return NextResponse.json({
-      overall,
-      overallBand,
-      pillarScores,
-      analysis,
-    });
+    ai = getClient();
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    return NextResponse.json(
-      { error: "Analysis failed", details: message },
-      { status: 500 }
-    );
+    const msg = err instanceof Error ? err.message : "Configuration error";
+    return new Response(JSON.stringify({ error: msg }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
+
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      try {
+        const genStream = await ai.models.generateContentStream({
+          model: MODEL,
+          contents: prompt,
+          config: {
+            responseMimeType: "application/json",
+            temperature: 0.6,
+            maxOutputTokens: 16384,
+            thinkingConfig: { thinkingBudget: 2048 },
+          },
+        });
+
+        for await (const chunk of genStream) {
+          const text = chunk.text;
+          if (text) controller.enqueue(encoder.encode(text));
+        }
+        controller.close();
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "Stream failed";
+        controller.enqueue(
+          encoder.encode(`\n\n[STREAM_ERROR]${msg}[/STREAM_ERROR]`)
+        );
+        controller.close();
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "no-store, no-transform",
+      "X-Accel-Buffering": "no",
+    },
+  });
 }

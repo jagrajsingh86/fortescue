@@ -1,6 +1,7 @@
 interface PromptInput {
   clientName?: string;
   industry?: string;
+  context?: string;
   overall: number;
   overallBand: string;
   pillarScores: { pillarId: string; pillarName: string; score: number; band: string }[];
@@ -8,10 +9,14 @@ interface PromptInput {
 }
 
 export function buildPrompt(input: PromptInput): string {
+  const contextBlock = input.context?.trim()
+    ? `\n## Client-Provided Context\n\nThe client described their business and AI priorities as follows. Anchor every recommendation in this context — reference specific themes, goals, or constraints the client mentioned.\n\n"""\n${input.context.trim()}\n"""\n`
+    : "";
+
   return `You are a senior AI strategy consultant at Cognizant. A client${
     input.clientName ? ` (${input.clientName})` : ""
   }${input.industry ? ` in the ${input.industry} industry` : ""} has just completed Cognizant's AI Maturity Assessment.
-
+${contextBlock}
 ## Assessment Framework
 
 The assessment evaluates five pillars across three maturity vectors:

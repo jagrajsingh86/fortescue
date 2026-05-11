@@ -8,16 +8,61 @@ interface Props {
   selectedScore?: number;
   accent: string;
   onSelect: (score: number) => void;
+  onPrevious?: () => void;
 }
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
-export function QuestionCard({ question, selectedScore, accent, onSelect }: Props) {
+export function QuestionCard({
+  question,
+  selectedScore,
+  accent,
+  onSelect,
+  onPrevious,
+}: Props) {
   const [pending, setPending] = useState<number | null>(null);
 
   useEffect(() => {
     setPending(null);
   }, [question]);
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      // Don't intercept while user is typing in an input/textarea
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+
+      if (pending !== null) return;
+
+      // 1–5 selects option A–E
+      if (e.key >= "1" && e.key <= "5") {
+        const i = Number(e.key) - 1;
+        const opt = question.options[i];
+        if (opt) {
+          e.preventDefault();
+          handleClick(opt.score);
+        }
+        return;
+      }
+
+      // Backspace or ArrowLeft → previous question
+      if ((e.key === "Backspace" || e.key === "ArrowLeft") && onPrevious) {
+        e.preventDefault();
+        onPrevious();
+      }
+    }
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [question, pending, onPrevious]);
 
   function handleClick(score: number) {
     if (pending !== null) return;
@@ -40,7 +85,7 @@ export function QuestionCard({ question, selectedScore, accent, onSelect }: Prop
                 type="button"
                 disabled={pending !== null}
                 onClick={() => handleClick(opt.score)}
-                className="w-full text-left flex items-start gap-4 px-5 py-4 transition-all duration-200 disabled:cursor-default"
+                className="w-full text-left flex items-start gap-4 px-5 py-4 transition-all duration-200 disabled:cursor-default group"
                 style={{
                   background: isSelected ? "rgba(6,199,204,0.10)" : "rgba(255,255,255,0.04)",
                   border: `1px solid ${isSelected ? accent : "rgba(255,255,255,0.08)"}`,
@@ -49,10 +94,16 @@ export function QuestionCard({ question, selectedScore, accent, onSelect }: Prop
                 }}
               >
                 <span
-                  className="font-bold text-[11px] tracking-[0.16em] mt-[3px]"
+                  className="font-bold text-[11px] tracking-[0.16em] mt-[3px] flex items-center gap-1.5"
                   style={{ color: isSelected ? accent : "rgba(255,255,255,0.45)" }}
                 >
                   {LETTERS[i]}
+                  <span
+                    className="font-mono text-[10px] opacity-0 group-hover:opacity-100 transition-opacity"
+                    aria-hidden="true"
+                  >
+                    [{i + 1}]
+                  </span>
                 </span>
                 <span className="text-white/85 text-[15px] leading-relaxed font-light flex-1">
                   {opt.text}
@@ -62,6 +113,17 @@ export function QuestionCard({ question, selectedScore, accent, onSelect }: Prop
           );
         })}
       </ul>
+
+      <div className="mt-6 text-[10px] uppercase tracking-[0.22em] text-white/35 flex items-center gap-4">
+        <span>
+          Press <kbd className="px-1.5 py-0.5 bg-white/[0.06] border border-white/10 font-mono">1</kbd>–<kbd className="px-1.5 py-0.5 bg-white/[0.06] border border-white/10 font-mono">5</kbd> to select
+        </span>
+        {onPrevious && (
+          <span>
+            <kbd className="px-1.5 py-0.5 bg-white/[0.06] border border-white/10 font-mono">←</kbd> previous
+          </span>
+        )}
+      </div>
     </div>
   );
 }

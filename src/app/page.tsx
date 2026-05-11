@@ -12,6 +12,7 @@ export default function LandingPage() {
   const router = useRouter();
   const [clientName, setClientName] = useState("");
   const [industry, setIndustry] = useState("");
+  const [context, setContext] = useState("");
 
   function begin() {
     clearSession();
@@ -19,6 +20,7 @@ export default function LandingPage() {
       answers: {},
       clientName: clientName.trim() || undefined,
       industry: industry.trim() || undefined,
+      context: context.trim() || undefined,
       current: 0,
     });
     router.push("/assessment");
@@ -92,21 +94,35 @@ export default function LandingPage() {
             </p>
 
             <div
-              className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mb-10 cog-reveal"
+              className="flex flex-col gap-3 max-w-xl mb-10 cog-reveal"
               style={{ animationDelay: "640ms" }}
             >
-              <Field
-                label="Client / Organisation"
-                placeholder="e.g. Fortescue"
-                value={clientName}
-                onChange={setClientName}
-              />
-              <Field
-                label="Industry"
-                placeholder="e.g. Mining & Resources"
-                value={industry}
-                onChange={setIndustry}
-              />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <Field
+                  label="Client / Organisation"
+                  placeholder="e.g. Fortescue"
+                  value={clientName}
+                  onChange={setClientName}
+                />
+                <Field
+                  label="Industry"
+                  placeholder="e.g. Mining & Resources"
+                  value={industry}
+                  onChange={setIndustry}
+                />
+              </div>
+              <label className="flex flex-col gap-1.5">
+                <span className="text-[10px] uppercase tracking-[0.22em] text-white/50">
+                  About your business <span className="text-white/30 normal-case tracking-normal">(optional — anchors the AI analysis)</span>
+                </span>
+                <textarea
+                  value={context}
+                  rows={3}
+                  placeholder="In a sentence or two: what does your organisation do, what are your biggest AI ambitions, and what's holding you back?"
+                  onChange={(e) => setContext(e.target.value)}
+                  className="bg-white/[0.04] border border-white/10 px-4 py-3 text-white text-[14px] font-light outline-none focus:border-[#06C7CC] transition-colors resize-none"
+                />
+              </label>
             </div>
 
             <button

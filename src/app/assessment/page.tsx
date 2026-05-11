@@ -30,6 +30,7 @@ export default function AssessmentPage() {
   const [current, setCurrent] = useState(0);
   const [clientName, setClientName] = useState<string | undefined>();
   const [industry, setIndustry] = useState<string | undefined>();
+  const [context, setContext] = useState<string | undefined>();
 
   useEffect(() => {
     const s = loadSession();
@@ -37,13 +38,14 @@ export default function AssessmentPage() {
     setCurrent(Math.min(s.current ?? 0, total - 1));
     setClientName(s.clientName);
     setIndustry(s.industry);
+    setContext(s.context);
     setHydrated(true);
   }, [total]);
 
   useEffect(() => {
     if (!hydrated) return;
-    saveSession({ answers, clientName, industry, current });
-  }, [answers, clientName, industry, current, hydrated]);
+    saveSession({ answers, clientName, industry, context, current });
+  }, [answers, clientName, industry, context, current, hydrated]);
 
   if (!hydrated) return null;
 
@@ -57,7 +59,7 @@ export default function AssessmentPage() {
     const next = { ...answers, [key]: score };
     setAnswers(next);
     if (current >= total - 1) {
-      saveSession({ answers: next, clientName, industry, current });
+      saveSession({ answers: next, clientName, industry, context, current });
       router.push("/results");
     } else {
       setCurrent(current + 1);
@@ -99,6 +101,7 @@ export default function AssessmentPage() {
           accent={pillar.accent}
           selectedScore={selectedScore}
           onSelect={onSelect}
+          onPrevious={current > 0 ? goBack : undefined}
         />
 
         {current > 0 && (
