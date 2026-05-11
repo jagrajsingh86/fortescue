@@ -19,7 +19,7 @@ The assessment evaluates five pillars across three maturity vectors:
 - **Vector 2: Industrialising AI** — scaling and standardising AI
 - **Vector 3: Agentifying the Enterprise** — autonomous, agentic operations
 
-Maturity bands: Foundational (1–3.3), Scaling (3.4–6.6), Autonomous (6.7–10)
+Maturity bands: Foundational (1–3), Scaling (4–6), Autonomous (7–10)
 
 ## Client Results
 

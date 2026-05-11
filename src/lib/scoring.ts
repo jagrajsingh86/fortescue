@@ -21,8 +21,8 @@ export function getOverallScore(answers: AssessmentAnswers): number {
 }
 
 export function getBand(score: number): Band {
-  if (score <= 3.33) return "Foundational";
-  if (score <= 6.66) return "Scaling";
+  if (score < 4) return "Foundational";
+  if (score < 7) return "Scaling";
   return "Autonomous";
 }
 

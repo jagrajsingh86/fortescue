@@ -9,33 +9,63 @@ export const PILLARS: Pillar[] = [
     accent: pillarAccents[0],
     questions: [
       {
-        q: "How does your organisation approach AI literacy and upskilling?",
+        q: "How does your organisation develop AI skills and talent?",
         options: [
-          { text: "No formal AI training. Staff learn ad hoc or not at all.", score: 1 },
-          { text: "Targeted training for technical teams only.", score: 3 },
-          { text: "AI literacy modules rolling out to selected business functions.", score: 5 },
-          { text: "Structured AI literacy programme rolling out to all employees.", score: 7 },
-          { text: "Continuous learning with AI copilots embedded in everyday workflows.", score: 10 },
+          { text: "No formal AI training or development programmes exist.", score: 1 },
+          {
+            text: "Ad-hoc training available for technical teams only, talent grown through informal learning.",
+            score: 3,
+          },
+          {
+            text: "Structured AI Literacy Programme for all employees — not just technologists — with Communities of Practice as SME innovation conduits into the Architecture Review Board.",
+            score: 5,
+          },
+          {
+            text: "Employee Experience managed through weekly pulse surveys for proactive response, with value-aligned structures measuring business value drivers across journey flows.",
+            score: 7,
+          },
+          {
+            text: "Human/AI Teaming models define how humans and agents divide decisions, escalate and share accountability.",
+            score: 9,
+          },
         ],
       },
       {
-        q: "How do humans and AI agents collaborate today?",
+        q: "How does your organisation support internal mobility and team structure?",
         options: [
-          { text: "Humans work independently. AI is rarely used.", score: 1 },
-          { text: "Some teams use AI as an individual productivity tool.", score: 3 },
-          { text: "Cross-functional teams pilot human-in-the-loop AI workflows.", score: 5 },
-          { text: "Policies define how humans and AI divide decisions and share accountability.", score: 7 },
-          { text: "Distributed human-agent teams reconfigure dynamically as conditions change.", score: 10 },
+          { text: "Traditional job postings with fixed hierarchical team structures.", score: 1 },
+          { text: "Internal job boards with basic search and limited cross-functional movement.", score: 3 },
+          {
+            text: "Mobility Marketplace platform enables employees to discover and move roles across BUs, reducing attrition.",
+            score: 5,
+          },
+          {
+            text: "Regular measurement of team-level psychological safety linked to innovation output and incident culture.",
+            score: 7,
+          },
+          {
+            text: "Distributed Teams build ephemeral capabilities to quickly respond to changes, with Continuous Innovation strategy empowering discoveries.",
+            score: 9,
+          },
         ],
       },
       {
-        q: "How do you measure employee experience and psychological safety?",
+        q: "How mature are your organisation's ways of working and innovation culture?",
         options: [
-          { text: "No formal measurement.", score: 1 },
-          { text: "Annual engagement surveys.", score: 3 },
-          { text: "Quarterly surveys with team-level dashboards.", score: 5 },
-          { text: "Weekly pulse surveys with team-level safety metrics.", score: 7 },
-          { text: "Real-time signals linked to innovation and value outcomes.", score: 10 },
+          { text: "Traditional methods with no structured approach to innovation.", score: 1 },
+          { text: "Some agile practices adopted but inconsistently applied across the organisation.", score: 3 },
+          {
+            text: "Design Thinking, Systems Thinking and value-based journey flows embedded as standard Ways of Working.",
+            score: 5,
+          },
+          {
+            text: "Value-aligned structures organise and measure business value drivers across journey flows, linking ways of working to outcomes.",
+            score: 7,
+          },
+          {
+            text: "Continuous Innovation strategy established with empowered employees enabling discoveries through structured experimentation.",
+            score: 10,
+          },
         ],
       },
     ],
@@ -47,33 +77,60 @@ export const PILLARS: Pillar[] = [
     accent: pillarAccents[1],
     questions: [
       {
-        q: "How mature is your AI governance?",
+        q: "How mature is your AI governance and compliance framework?",
         options: [
-          { text: "No formal AI governance in place.", score: 1 },
-          { text: "Basic policies emerging. Ownership is unclear.", score: 3 },
-          { text: "Defined governance forum reviewing high-risk use cases.", score: 5 },
-          { text: "Formal policies, ownership, and audit trails covering model risk and bias.", score: 7 },
-          { text: "Distributed governance that adapts in real time to market and business needs.", score: 10 },
+          { text: "No formal AI governance policies exist.", score: 1 },
+          { text: "Basic guidelines documented but no audit trails or clear ownership.", score: 2 },
+          {
+            text: "Formal AI Governance with ownership and audit trails for AI decisions covering model risk and bias.",
+            score: 5,
+          },
+          {
+            text: "RegTech Automation monitors compliance and regulatory reporting to flag exposures in real time, with Hybrid Data Governance guardrails across business units.",
+            score: 7,
+          },
+          {
+            text: "Distributed Governance constructs responding in real time to market and business needs, with Digital Twin Ops for scenario testing before committing changes.",
+            score: 10,
+          },
         ],
       },
       {
-        q: "How do you handle compliance and regulatory reporting?",
+        q: "How does your organisation deliver technology initiatives?",
         options: [
-          { text: "Manual, periodic reporting.", score: 1 },
-          { text: "Partially automated, with significant human review.", score: 3 },
-          { text: "Workflow automation covering core obligations.", score: 5 },
-          { text: "RegTech automation flagging exposures in real time.", score: 7 },
-          { text: "Risk-weighted automation with proactive, value-based decisioning.", score: 10 },
+          { text: "Traditional waterfall project management with manual controls.", score: 1 },
+          { text: "Agile projects adopted but still project-based funding and siloed delivery.", score: 3 },
+          {
+            text: "Projects-to-Products shift — user-centric, autonomously reconfigurable, outcome-oriented with DevSecOps, Cloud Control Framework and Value Stream Mapping.",
+            score: 5,
+          },
+          {
+            text: "Net Zero integrated at every level of tech, product and governance with Carbon Accounting instrumenting Scope 1, 2 and 3 data automatically.",
+            score: 7,
+          },
+          {
+            text: "Safe and Sustainable Ops with risk-weighted automation, proactive value-based decisioning and living digital twins modelling critical processes.",
+            score: 9,
+          },
         ],
       },
       {
-        q: "How is sustainability instrumented across the business?",
+        q: "How does your organisation manage cloud enablement and financial governance?",
         options: [
-          { text: "Not measured or reported.", score: 1 },
-          { text: "Periodic manual reporting against high-level targets.", score: 3 },
-          { text: "Scope 1 and 2 captured through dedicated systems.", score: 5 },
-          { text: "Systems emit Scope 1, 2, and 3 data automatically.", score: 7 },
-          { text: "Sustainable thinking integrated at every level of tech, product, and governance.", score: 10 },
+          { text: "Limited cloud adoption with no structured financial controls.", score: 1 },
+          { text: "Some cloud migration underway but costs are not systematically tracked.", score: 3 },
+          {
+            text: "Cloud Control Framework with Value-Driven Ops and financial risk controls, supported by FinOps Practice for continuous cost visibility.",
+            score: 5,
+          },
+          {
+            text: "Hybrid Data Governance guardrails on business unit entitlements with automated compliance monitoring integrated into cloud operations.",
+            score: 7,
+          },
+          {
+            text: "Distributed Governance responding in real time to market needs with fully automated, risk-weighted cloud operations and proactive value-based decisioning.",
+            score: 10,
+          },
         ],
       },
     ],
@@ -85,33 +142,63 @@ export const PILLARS: Pillar[] = [
     accent: pillarAccents[2],
     questions: [
       {
-        q: "What level of AI capability is deployed across the business?",
+        q: "What is the current state of AI adoption across the enterprise?",
         options: [
-          { text: "No production AI capabilities.", score: 1 },
-          { text: "Individual copilots and assistants for some roles.", score: 3 },
-          { text: "Production GenAI workflows in two or more business domains.", score: 5 },
-          { text: "Agentic AI that learns, decides, negotiates, and transacts.", score: 7 },
-          { text: "Curated agent marketplace with autonomous machine-to-machine activity.", score: 10 },
+          { text: "Experimental or proof-of-concept only.", score: 1 },
+          {
+            text: "AI Pairing — some teams paired with their own AI companion or CoPilot for productivity.",
+            score: 3,
+          },
+          {
+            text: "Augmented Developer tools with Agentic AI, RAG for proprietary knowledge access, and Context Engineering designing systems to use information effectively.",
+            score: 5,
+          },
+          {
+            text: "Centralised AI Framework Libraries with models, connectors and patterns for ADLC pipelines, plus AI Observability monitoring model drift and tracing decisions.",
+            score: 7,
+          },
+          {
+            text: "Agent Marketplace — a secure, curated platform to maintain and consume approved agents, with Machine Customers enabling autonomous transactions and proactive negotiation.",
+            score: 10,
+          },
         ],
       },
       {
-        q: "How do you manage AI safety, drift, and observability?",
+        q: "How does your organisation manage AI safety, ethics and responsible AI?",
         options: [
-          { text: "No structured safety testing or monitoring.", score: 1 },
-          { text: "Manual reviews before deployment; limited post-launch monitoring.", score: 3 },
-          { text: "Evaluation harnesses run pre-release; basic production logging.", score: 5 },
-          { text: "Red teaming plus observability tracking drift with human-readable explanations.", score: 7 },
-          { text: "Continuous automated safety with policy pattern management across SLMs and LLMs.", score: 10 },
+          { text: "No formal AI ethics or safety processes.", score: 1 },
+          { text: "Basic review process before deployment but no structured testing.", score: 3 },
+          {
+            text: "AI Red Teaming with structured adversarial testing for jailbreaks, bias and unsafe outputs before and after deployment.",
+            score: 5,
+          },
+          {
+            text: "AI Ethics Council developing formal guidance and policies, with Synthetic Data Gen providing privacy-safe, statistically valid training data.",
+            score: 7,
+          },
+          {
+            text: "Policy Pattern Management with LLM and SLM policy models published for all product teams, governing agent behaviour at scale.",
+            score: 9,
+          },
         ],
       },
       {
-        q: "How are AI systems integrated with the rest of the enterprise?",
+        q: "How are AI agents and orchestration integrated into your enterprise architecture?",
         options: [
-          { text: "AI runs in isolation. Point solutions only.", score: 1 },
-          { text: "Ad hoc API integrations into a few systems.", score: 3 },
-          { text: "Reusable AI services exposed through an internal platform.", score: 5 },
-          { text: "APIs exposed via MCP and Agent-to-Agent (A2A) standards.", score: 7 },
-          { text: "Full AI orchestration across multimodal inputs, models, and workflows.", score: 10 },
+          { text: "No agent capabilities or orchestration in place.", score: 1 },
+          { text: "Isolated chatbots or single-purpose AI tools with no integration.", score: 2 },
+          {
+            text: "Context Engineering designing systems to understand and use information effectively, with Retrieval-Augmented Generation for proprietary knowledge.",
+            score: 5,
+          },
+          {
+            text: "Agent Ready Integration with APIs exposed via MCP and A2A standards, plus AI Orchestration coordinating models, data, workflows and systems.",
+            score: 7,
+          },
+          {
+            text: "Agent Marketplace with Machine Customers, Multimodal AI extending to images, audio, video and sensor data, and Small Language Models for low-latency edge deployment.",
+            score: 10,
+          },
         ],
       },
     ],
@@ -123,33 +210,60 @@ export const PILLARS: Pillar[] = [
     accent: pillarAccents[3],
     questions: [
       {
-        q: "How is data treated in the organisation?",
+        q: "How does your organisation treat data strategically?",
         options: [
-          { text: "Data is a by-product of systems, not actively managed.", score: 1 },
-          { text: "Data-first strategy emerging. Trust still being built.", score: 3 },
-          { text: "Defined data domains with owners and quality metrics.", score: 5 },
-          { text: "Data treated as a product, generating valuable insights.", score: 7 },
-          { text: "Live data marketplace enabling secure exchange and monetisation.", score: 10 },
+          { text: "Data is a by-product of systems with no overarching strategy.", score: 1 },
+          { text: "Some data governance exists but siloed across teams with no central ownership.", score: 3 },
+          {
+            text: "Data Centricity — data-first strategy over platform, with Data Contracts defining versioned agreements on schema, SLAs and quality between producers and consumers.",
+            score: 5,
+          },
+          {
+            text: "Data as a Product — forming valuable products and insights from data assets, with Unified Data Fabric virtualising data across disparate systems for self-service analytics.",
+            score: 7,
+          },
+          {
+            text: "Data Marketplace enabling secure live data exchange, transactions and monetisation, with Data Democratisation guardrails enabling safe ideation and execution.",
+            score: 10,
+          },
         ],
       },
       {
-        q: "How accessible is data across business units?",
+        q: "What is your organisation's analytics and data pipeline maturity?",
         options: [
-          { text: "Heavily siloed by system and team.", score: 1 },
-          { text: "Point integrations between key systems.", score: 3 },
-          { text: "Central warehouse or lakehouse curated for analytics.", score: 5 },
-          { text: "Unified data fabric virtualising disparate systems for self-service.", score: 7 },
-          { text: "Fully democratised with guardrails enabling safe ideation and execution.", score: 10 },
+          { text: "Manual reporting and spreadsheet-based analysis.", score: 1 },
+          { text: "Batch ETL pipelines with standard BI tools.", score: 3 },
+          {
+            text: "Real-Time Analytics moving from batch to event-driven pipelines, with IT/OT Convergence merging entitlements to safely increase interoperability.",
+            score: 5,
+          },
+          {
+            text: "Knowledge Graphs representing entity relationships explicitly, improving AI reasoning and cross-domain analytics, with Hyper Personalisation via enterprise-wide immutable unique IDs.",
+            score: 7,
+          },
+          {
+            text: "Privacy Enhancing Technologies — federated learning, differential privacy and homomorphic encryption to share insights safely across boundaries.",
+            score: 10,
+          },
         ],
       },
       {
-        q: "How are data contracts and privacy handled?",
+        q: "How is data quality, trust and asset value managed?",
         options: [
-          { text: "No formal contracts or privacy-enhancing technology.", score: 1 },
-          { text: "Basic agreements between teams; manual privacy reviews.", score: 3 },
-          { text: "Documented schemas and data classification policies enforced at ingestion.", score: 5 },
-          { text: "Versioned data contracts defining schema, SLAs, and quality.", score: 7 },
-          { text: "Federated learning, differential privacy, and homomorphic encryption in use.", score: 10 },
+          { text: "No formal data quality processes in place.", score: 1 },
+          { text: "Reactive data cleansing when issues surface, no proactive governance.", score: 3 },
+          {
+            text: "Data as an Asset — building trust, value and relevance in data with formal Data Contracts between producers and consumers.",
+            score: 5,
+          },
+          {
+            text: "Hyper Personalisation with centralised service for enterprise-wide immutable unique IDs, supported by Unified Data Fabric for consistent access.",
+            score: 7,
+          },
+          {
+            text: "Secure live data exchange with guardrails enabling safe ideation and autonomous execution, with Privacy Enhancing Tech protecting insights across organisational boundaries.",
+            score: 10,
+          },
         ],
       },
     ],
@@ -161,33 +275,60 @@ export const PILLARS: Pillar[] = [
     accent: pillarAccents[4],
     questions: [
       {
-        q: "How modernised is the technology stack?",
+        q: "How mature is your security and trust architecture?",
         options: [
-          { text: "Predominantly legacy monolithic systems.", score: 1 },
-          { text: "Modernisation in flight. Reusable patterns emerging.", score: 3 },
-          { text: "Cloud-native services with CI/CD for most workloads.", score: 5 },
-          { text: "Composable architecture with modular, policy-controlled design.", score: 7 },
-          { text: "Edge and sovereign cloud processing addressing latency and residency.", score: 10 },
+          { text: "Perimeter-based security with castle-and-moat approach.", score: 1 },
+          { text: "Some identity-based controls implemented but incomplete coverage.", score: 3 },
+          {
+            text: "Zero Trust Framework with Supply Chain Security — software bill of materials and signed artefacts to manage third-party and OSS risk.",
+            score: 5,
+          },
+          {
+            text: "Continuous Threat Exposure Management with state awareness and self-optimising threat analysis.",
+            score: 7,
+          },
+          {
+            text: "Quantum-Safe Crypto implementing post-quantum algorithms for NIST deadlines and harvest-now-decrypt-later threats.",
+            score: 10,
+          },
         ],
       },
       {
-        q: "What is the security posture?",
+        q: "What is your approach to platform and architecture modernisation?",
         options: [
-          { text: "Perimeter-based security only.", score: 1 },
-          { text: "Zero trust policies forming.", score: 3 },
-          { text: "Identity-led access, MFA everywhere, and active threat detection.", score: 5 },
-          { text: "Continuous threat exposure management with self-optimising analysis.", score: 7 },
-          { text: "Quantum-safe cryptography in place for post-quantum threats.", score: 10 },
+          { text: "Monolithic legacy systems with manual deployments.", score: 1 },
+          { text: "Some cloud migration underway with basic CI/CD pipelines.", score: 3 },
+          {
+            text: "Platform Engineering with internal developer platform — golden paths, self-serve and embedded security, plus API Strategy with structured lifecycle and bounded contexts.",
+            score: 5,
+          },
+          {
+            text: "Composable Architecture for rapid business enablement with Smart Operations auto-sensing anomalies for self-healing, plus eBPF Observability for deep kernel-level telemetry.",
+            score: 7,
+          },
+          {
+            text: "Edge and Sovereign Cloud processing data close to source for latency, residency and disconnected ops, with Connected Workforce telemetry-based knowledge and automation.",
+            score: 10,
+          },
         ],
       },
       {
-        q: "How mature is platform engineering and observability?",
+        q: "How does your organisation manage cloud economics and operational efficiency?",
         options: [
-          { text: "Developers manage their own infrastructure individually.", score: 1 },
-          { text: "Some shared platforms and tooling exist.", score: 3 },
-          { text: "Defined platform team operating common services with paved roads.", score: 5 },
-          { text: "Internal developer platform with golden paths and self-serve.", score: 7 },
-          { text: "eBPF-grade observability with smart, self-healing operations.", score: 10 },
+          { text: "No cloud cost visibility or governance in place.", score: 1 },
+          { text: "Basic cloud billing monitoring with limited accountability.", score: 3 },
+          {
+            text: "FinOps Practice providing continuous cloud cost visibility and structured economics linked to Finance Risk Controls, with Core Modernisation into reusable modular patterns.",
+            score: 5,
+          },
+          {
+            text: "Smart Operations auto-sensing anomalies and patterns for self-healing and reduction of operational overhead, with Composable Architecture enabling rapid reconfiguration.",
+            score: 7,
+          },
+          {
+            text: "Democratisation with guardrails enabling safe ideation and execution of technology assets, with fully automated cost optimisation across hybrid, edge and sovereign cloud.",
+            score: 10,
+          },
         ],
       },
     ],
