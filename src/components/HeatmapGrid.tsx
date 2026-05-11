@@ -6,6 +6,14 @@ interface Props {
   scores: PillarScore[];
 }
 
+function hexToRgba(hex: string, alpha: number) {
+  const clean = hex.replace("#", "");
+  const r = parseInt(clean.slice(0, 2), 16);
+  const g = parseInt(clean.slice(2, 4), 16);
+  const b = parseInt(clean.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
 export function HeatmapGrid({ scores }: Props) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
@@ -17,8 +25,8 @@ export function HeatmapGrid({ scores }: Props) {
             key={s.pillarId}
             className="aspect-[1.1/1] p-4 flex flex-col justify-between"
             style={{
-              background: `color-mix(in srgb, ${color} 18%, transparent)`,
-              border: `1px solid color-mix(in srgb, ${color} 45%, transparent)`,
+              background: hexToRgba(color, 0.18),
+              border: `1px solid ${hexToRgba(color, 0.45)}`,
             }}
           >
             <div className="flex items-center justify-between">

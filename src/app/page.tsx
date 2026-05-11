@@ -28,32 +28,73 @@ export default function LandingPage() {
     <>
       <ProgressBar value={0} max={1} />
 
-      <header className="px-6 sm:px-10 pt-6 flex items-center justify-between">
-        <CognizantLogo size={28} />
-        <span className="text-[11px] uppercase tracking-[0.22em] text-white/45">
+      <header className="px-6 sm:px-10 pt-6 flex items-center justify-between relative z-10">
+        <span className="cog-reveal" style={{ animationDelay: "0ms" }}>
+          <CognizantLogo size={28} />
+        </span>
+        <span
+          className="text-[11px] uppercase tracking-[0.22em] text-white/45 cog-reveal"
+          style={{ animationDelay: "120ms" }}
+        >
           AI Maturity Assessment
         </span>
       </header>
 
-      <main className="flex-1 px-6 sm:px-10 py-12 sm:py-20 max-w-5xl w-full mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-20 items-start">
-          <div className="cog-fade-up">
-            <div className="text-[11px] uppercase tracking-[0.24em] text-[#06C7CC] mb-5">
-              5 pillars · 15 questions · ~5 minutes
+      <main className="flex-1 px-6 sm:px-10 py-12 sm:py-20 max-w-5xl w-full mx-auto relative">
+        {/* Ambient aurora behind the headline */}
+        <div className="cog-aurora" aria-hidden="true" />
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-20 items-start relative">
+          <div>
+            <div
+              className="flex items-center gap-2.5 text-[11px] uppercase tracking-[0.24em] text-[#06C7CC] mb-5 cog-reveal"
+              style={{ animationDelay: "180ms" }}
+            >
+              <span
+                className="inline-block w-1.5 h-1.5 bg-[#06C7CC] cog-dot"
+                aria-hidden="true"
+              />
+              <span>5 pillars · 15 questions · ~5 minutes</span>
             </div>
+
             <h1 className="text-white font-light text-[42px] sm:text-[54px] leading-[1.05] tracking-tight mb-6">
-              AI Maturity
-              <br />
-              Assessment
+              <span
+                className="block cog-reveal"
+                style={{ animationDelay: "260ms" }}
+              >
+                AI Maturity
+              </span>
+              <span
+                className="block cog-reveal"
+                style={{ animationDelay: "380ms" }}
+              >
+                <span className="relative inline-block">
+                  Assessment
+                  <span
+                    className="absolute left-0 -bottom-1 h-[2px] w-full cog-line-draw"
+                    style={{
+                      background: "linear-gradient(90deg, #06C7CC, #7373D8)",
+                      animationDelay: "780ms",
+                    }}
+                  />
+                </span>
+              </span>
             </h1>
-            <p className="text-white/70 text-[17px] leading-relaxed font-light max-w-xl mb-10">
+
+            <p
+              className="text-white/70 text-[17px] leading-relaxed font-light max-w-xl mb-10 cog-reveal"
+              style={{ animationDelay: "520ms" }}
+            >
               Evaluate your organisation&rsquo;s AI readiness across five
               strategic pillars. Receive a personalised analysis and a
               transformation roadmap grounded in Cognizant&rsquo;s BASIS
-              methodology — generated in real time by Claude.
+              methodology — generated in real time by Gemini.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mb-10">
+            <div
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mb-10 cog-reveal"
+              style={{ animationDelay: "640ms" }}
+            >
               <Field
                 label="Client / Organisation"
                 placeholder="e.g. Fortescue"
@@ -71,30 +112,38 @@ export default function LandingPage() {
             <button
               type="button"
               onClick={begin}
-              className="px-7 py-3.5 text-[13px] uppercase tracking-[0.2em] font-semibold transition-all"
+              className="cog-cta cog-reveal px-7 py-3.5 text-[13px] uppercase tracking-[0.2em] font-semibold"
               style={{
                 background: "#06C7CC",
                 color: "#000028",
+                animationDelay: "760ms",
               }}
             >
               Begin Assessment →
             </button>
           </div>
 
-          <div className="cog-fade-up" style={{ animationDelay: "120ms" }}>
-            <div className="text-[10px] uppercase tracking-[0.24em] text-white/45 mb-4">
+          <div>
+            <div
+              className="text-[10px] uppercase tracking-[0.24em] text-white/45 mb-4 cog-reveal"
+              style={{ animationDelay: "300ms" }}
+            >
               The Five Pillars
             </div>
             <ul className="flex flex-col">
-              {PILLARS.map((p) => (
+              {PILLARS.map((p, i) => (
                 <li
                   key={p.id}
-                  className="flex items-baseline gap-5 py-4 px-5"
-                  style={{
-                    borderTop: "1px solid rgba(255,255,255,0.06)",
-                    borderLeft: `3px solid ${p.accent}`,
-                    background: "rgba(255,255,255,0.02)",
-                  }}
+                  className="cog-row-in flex items-baseline gap-5 py-4 px-5"
+                  style={
+                    {
+                      borderTop: "1px solid rgba(255,255,255,0.06)",
+                      borderLeft: `3px solid ${p.accent}`,
+                      background: "rgba(255,255,255,0.02)",
+                      animationDelay: `${420 + i * 110}ms`,
+                      ["--row-accent" as never]: p.accent,
+                    } as React.CSSProperties
+                  }
                 >
                   <span
                     className="text-[11px] font-bold tracking-[0.18em]"

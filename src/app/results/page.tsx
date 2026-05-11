@@ -44,23 +44,49 @@ export default function ResultsPage() {
   );
 
   async function exportPDF() {
-    if (!reportRef.current) return;
+    const el = reportRef.current;
+    if (!el) return;
     setExporting(true);
+    const originalBg = el.style.background;
+    const originalPadding = el.style.padding;
+    el.style.background = "#000028";
+    el.style.padding = "32px";
     try {
-      const mod = await import("html2pdf.js");
-      const html2pdf = mod.default;
-      await html2pdf()
+      const mod = (await import("html2pdf.js")) as unknown as {
+        default?: unknown;
+      };
+      // html2pdf.js can expose itself either as `mod.default` or as the
+      // namespace itself depending on the bundler — handle both shapes.
+      const factory = (mod.default ?? mod) as () => {
+        set: (o: Record<string, unknown>) => {
+          from: (e: HTMLElement) => { save: () => Promise<void> };
+        };
+      };
+      const filename = `AI-Maturity-Assessment-${(clientName || "Report").replace(/\s+/g, "-")}.pdf`;
+      await factory()
         .set({
           margin: [10, 10, 10, 10],
-          filename: `AI-Maturity-Assessment-${(clientName || "Report").replace(/\s+/g, "-")}.pdf`,
+          filename,
           image: { type: "jpeg", quality: 0.95 },
-          html2canvas: { scale: 2, useCORS: true, backgroundColor: "#000028" },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#000028",
+            windowWidth: el.scrollWidth,
+            logging: false,
+          },
           jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
           pagebreak: { mode: ["css", "legacy"] },
         })
-        .from(reportRef.current)
+        .from(el)
         .save();
+    } catch (err) {
+      console.error("PDF export failed", err);
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      window.alert(`PDF export failed: ${msg}`);
     } finally {
+      el.style.background = originalBg;
+      el.style.padding = originalPadding;
       setExporting(false);
     }
   }

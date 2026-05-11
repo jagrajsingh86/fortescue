@@ -80,5 +80,106 @@ textarea {
 }
 .cog-fade-up { animation: cog-fade-up 350ms ease-out both; }
 
+/* ─── Landing-page motion ────────────────────────────────────────── */
+
+/* Slow ambient aurora behind the headline */
+@keyframes cog-aurora {
+  0%   { transform: translate3d(-4%, -2%, 0) scale(1);   opacity: 0.55; }
+  50%  { transform: translate3d( 4%,  2%, 0) scale(1.08); opacity: 0.85; }
+  100% { transform: translate3d(-4%, -2%, 0) scale(1);   opacity: 0.55; }
+}
+.cog-aurora {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 70vh;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 40%, rgba(6, 199, 204, 0.18), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 75% 55%, rgba(115, 115, 216, 0.16), transparent 60%),
+    radial-gradient(ellipse 40% 35% at 55% 30%, rgba(47, 120, 196, 0.14), transparent 60%);
+  filter: blur(40px);
+  animation: cog-aurora 18s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Letter / line reveal — used for hero copy */
+@keyframes cog-reveal {
+  from { opacity: 0; transform: translateY(14px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+.cog-reveal { animation: cog-reveal 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Hairline underline that draws in from the left */
+@keyframes cog-line-draw {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.cog-line-draw {
+  display: inline-block;
+  transform-origin: left center;
+  animation: cog-line-draw 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Slow horizontal sheen that traverses the CTA on hover */
+@keyframes cog-sheen {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(220%); }
+}
+.cog-cta {
+  position: relative;
+  overflow: hidden;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 220ms ease, background 220ms ease;
+}
+.cog-cta::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 40%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 100%
+  );
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.cog-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 32px -12px rgba(6, 199, 204, 0.55);
+}
+.cog-cta:hover::after { animation: cog-sheen 900ms ease forwards; }
+
+/* Pillar row entry — combined with stagger delays in JSX */
+@keyframes cog-row-in {
+  from { opacity: 0; transform: translateX(-12px); border-left-color: rgba(255,255,255,0); }
+  to   { opacity: 1; transform: translateX(0);     border-left-color: var(--row-accent); }
+}
+.cog-row-in { animation: cog-row-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Soft teal beat on the eyebrow */
+@keyframes cog-dot {
+  0%, 100% { transform: scale(1);   opacity: 0.55; }
+  50%      { transform: scale(1.4); opacity: 1;    }
+}
+.cog-dot { animation: cog-dot 2.2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cog-aurora,
+  .cog-reveal,
+  .cog-line-draw,
+  .cog-cta::after,
+  .cog-row-in,
+  .cog-dot,
+  .cog-fade-up,
+  .cog-shimmer,
+  .cog-pulse {
+    animation: none !important;
+    transition: none !important;
+  }
+  .cog-line-draw { transform: scaleX(1); }
+}
+
 /* Selection */
 ::selection { background: rgba(6, 199, 204, 0.4); color: #fff; }
