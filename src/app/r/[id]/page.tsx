@@ -21,9 +21,9 @@ export default async function SavedReportPage({
     return (
       <>
         <ProgressBar value={1} max={1} />
-        <header className="cog-chrome px-6 sm:px-10 pt-6 flex items-center justify-between">
+        <header className="px-6 sm:px-10 pt-6 flex items-center justify-between">
           <CognizantLogo size={28} />
-          <div className="flex items-center gap-3">
+          <div className="cog-chrome flex items-center gap-3">
             <FullscreenButton />
             <ThemeToggle />
           </div>

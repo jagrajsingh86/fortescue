@@ -269,11 +269,24 @@ textarea {
 [data-theme="light"] .border-white\/12            { border-color: var(--line) !important; }
 
 /* ─── Present / fullscreen mode ───────────────────────────────────── */
-/* Hides app chrome so the report fills the screen. Driven by a
-   data-presenting attribute on <html>. */
+/* Hides only the elements explicitly tagged `cog-chrome` (action
+   buttons, footers, etc). The Cognizant logo and page progress bar
+   stay so the brand and orientation cues never disappear. */
 [data-presenting="true"] .cog-chrome { display: none !important; }
 [data-presenting="true"] body { overflow: auto; }
-[data-presenting="true"] main { padding-top: 2rem !important; }
+[data-presenting="true"] main {
+  /* Vertically centre content while leaving room for the header.
+     `safe center` falls back to start alignment if content is
+     taller than the viewport — prevents overflow being clipped. */
+  display: flex !important;
+  flex-direction: column;
+  justify-content: safe center;
+  min-height: calc(100vh - 80px);
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+}
+/* Slim the header down so the logo sits closer to the content */
+[data-presenting="true"] header { padding-top: 1rem !important; padding-bottom: 0.25rem; }
 
 /* ─── PDF export overrides ────────────────────────────────────────── */
 /* Applied inside html2canvas-pro's cloned DOM only. Forces dark theme

@@ -32,12 +32,12 @@ export default function LandingPage() {
     <>
       <ProgressBar value={0} max={1} />
 
-      <header className="cog-chrome px-6 sm:px-10 pt-6 flex items-center justify-between relative z-10">
+      <header className="px-6 sm:px-10 pt-6 flex items-center justify-between relative z-10">
         <span className="cog-reveal" style={{ animationDelay: "0ms" }}>
           <CognizantLogo size={28} />
         </span>
         <div
-          className="flex items-center gap-3 cog-reveal"
+          className="cog-chrome flex items-center gap-3 cog-reveal"
           style={{ animationDelay: "120ms" }}
         >
           <span className="text-[11px] uppercase tracking-[0.22em] text-white/45">

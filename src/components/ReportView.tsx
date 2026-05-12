@@ -114,9 +114,9 @@ export function ReportView({
 
   return (
     <>
-      <header className="cog-chrome px-6 sm:px-10 pt-6 flex items-center justify-between gap-3 flex-wrap">
+      <header className="px-6 sm:px-10 pt-6 flex items-center justify-between gap-3 flex-wrap">
         <CognizantLogo size={28} />
-        <div className="flex items-center gap-3">
+        <div className="cog-chrome flex items-center gap-3">
           <ShareButton
             answers={answers}
             clientName={clientName}

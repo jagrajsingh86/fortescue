@@ -78,12 +78,14 @@ export default function AssessmentPage() {
     <>
       <ProgressBar value={current + 1} max={total} />
 
-      <header className="cog-chrome px-6 sm:px-10 pt-6 flex items-center justify-between gap-4">
+      <header className="px-6 sm:px-10 pt-6 flex items-center justify-between gap-4">
         <CognizantLogo size={26} />
         <div className="flex items-center gap-3">
           <PillarNav activePillar={step.pi} />
-          <FullscreenButton />
-          <ThemeToggle />
+          <div className="cog-chrome flex items-center gap-3">
+            <FullscreenButton />
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
