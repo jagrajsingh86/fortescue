@@ -6,6 +6,7 @@ import { CognizantLogo } from "@/components/CognizantLogo";
 import { Footer } from "@/components/Footer";
 import { ProgressBar } from "@/components/ProgressBar";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { FullscreenButton } from "@/components/FullscreenButton";
 import { PILLARS } from "@/lib/pillars";
 import { clearSession, saveSession } from "@/lib/session";
 
@@ -42,6 +43,7 @@ export default function LandingPage() {
           <span className="text-[11px] uppercase tracking-[0.22em] text-white/45">
             AI Maturity Assessment
           </span>
+          <FullscreenButton />
           <ThemeToggle />
         </div>
       </header>

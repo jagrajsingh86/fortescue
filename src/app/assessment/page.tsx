@@ -8,6 +8,7 @@ import { ProgressBar } from "@/components/ProgressBar";
 import { PillarNav } from "@/components/PillarNav";
 import { QuestionCard } from "@/components/QuestionCard";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { FullscreenButton } from "@/components/FullscreenButton";
 import { PILLARS } from "@/lib/pillars";
 import { totalQuestions } from "@/lib/scoring";
 import { loadSession, saveSession } from "@/lib/session";
@@ -81,6 +82,7 @@ export default function AssessmentPage() {
         <CognizantLogo size={26} />
         <div className="flex items-center gap-3">
           <PillarNav activePillar={step.pi} />
+          <FullscreenButton />
           <ThemeToggle />
         </div>
       </header>

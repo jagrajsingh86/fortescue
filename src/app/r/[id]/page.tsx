@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import { CognizantLogo } from "@/components/CognizantLogo";
 import { Footer } from "@/components/Footer";
+import { FullscreenButton } from "@/components/FullscreenButton";
 import { ProgressBar } from "@/components/ProgressBar";
 import { ReportView } from "@/components/ReportView";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { getBand, getOverallScore } from "@/lib/scoring";
 import { kvConfigured, loadReport } from "@/lib/reports";
 
@@ -19,8 +21,12 @@ export default async function SavedReportPage({
     return (
       <>
         <ProgressBar value={1} max={1} />
-        <header className="cog-chrome px-6 sm:px-10 pt-6">
+        <header className="cog-chrome px-6 sm:px-10 pt-6 flex items-center justify-between">
           <CognizantLogo size={28} />
+          <div className="flex items-center gap-3">
+            <FullscreenButton />
+            <ThemeToggle />
+          </div>
         </header>
         <main className="flex-1 px-6 sm:px-10 py-16 max-w-3xl w-full mx-auto">
           <h1 className="text-white font-light text-[28px] mb-4">
