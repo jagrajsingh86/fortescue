@@ -54,12 +54,17 @@ export default function ResultsPage() {
         onAnalysisLoaded={setAnalysis}
       />
 
-      <div className="px-6 sm:px-10 -mt-6 mb-6 flex justify-end">
+      <div className="cog-chrome px-6 sm:px-10 -mt-6 mb-6 flex justify-end">
         <button
           type="button"
           onClick={retake}
-          className="px-4 py-2 text-[11px] uppercase tracking-[0.2em] font-semibold text-white/55 hover:text-white transition-colors"
-          style={{ border: "1px solid rgba(255,255,255,0.12)" }}
+          className="px-4 py-2 text-[11px] uppercase tracking-[0.2em] font-semibold transition-colors"
+          style={{
+            border: "1px solid var(--line)",
+            color: "var(--ink-mute)",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--ink)")}
+          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ink-mute)")}
         >
           Retake
         </button>

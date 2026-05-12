@@ -24,7 +24,7 @@ export function RadialGauge({ score, size = 220 }: Props) {
           cy={cy}
           r={radius}
           fill="none"
-          stroke="rgba(255,255,255,0.08)"
+          stroke="var(--line)"
           strokeWidth={6}
         />
         <circle
@@ -44,7 +44,7 @@ export function RadialGauge({ score, size = 220 }: Props) {
           x={cx}
           y={cy - 6}
           textAnchor="middle"
-          fill="#fff"
+          fill="var(--ink)"
           style={{ fontSize: size * 0.28, fontWeight: 300 }}
         >
           {score.toFixed(1)}
@@ -53,7 +53,7 @@ export function RadialGauge({ score, size = 220 }: Props) {
           x={cx}
           y={cy + size * 0.14}
           textAnchor="middle"
-          fill="rgba(255,255,255,0.55)"
+          fill="var(--ink-mute)"
           style={{ fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase" }}
         >
           of 10

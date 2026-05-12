@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { ProgressBar } from "@/components/ProgressBar";
 import { PillarNav } from "@/components/PillarNav";
 import { QuestionCard } from "@/components/QuestionCard";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { PILLARS } from "@/lib/pillars";
 import { totalQuestions } from "@/lib/scoring";
 import { loadSession, saveSession } from "@/lib/session";
@@ -76,9 +77,12 @@ export default function AssessmentPage() {
     <>
       <ProgressBar value={current + 1} max={total} />
 
-      <header className="px-6 sm:px-10 pt-6 flex items-center justify-between">
+      <header className="cog-chrome px-6 sm:px-10 pt-6 flex items-center justify-between gap-4">
         <CognizantLogo size={26} />
-        <PillarNav activePillar={step.pi} />
+        <div className="flex items-center gap-3">
+          <PillarNav activePillar={step.pi} />
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="flex-1 px-6 sm:px-10 py-12 sm:py-16 max-w-4xl w-full mx-auto">

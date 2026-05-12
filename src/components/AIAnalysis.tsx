@@ -113,11 +113,14 @@ export function AIAnalysis({
       <div
         className="p-6"
         style={{
-          background: "rgba(232,72,85,0.08)",
-          border: "1px solid rgba(232,72,85,0.35)",
+          background: "color-mix(in srgb, var(--danger) 10%, transparent)",
+          border: "1px solid color-mix(in srgb, var(--danger) 40%, transparent)",
         }}
       >
-        <div className="text-[11px] uppercase tracking-[0.22em] text-[#E84855] mb-2">
+        <div
+          className="text-[11px] uppercase tracking-[0.22em] mb-2"
+          style={{ color: "var(--danger)" }}
+        >
           Analysis unavailable
         </div>
         <p className="text-white/75 text-[14px] leading-relaxed">
@@ -157,8 +160,8 @@ export function AIAnalysis({
                   key={pa.pillarId}
                   className="p-5 cog-fade-up"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.06)",
+                    background: "var(--surface-card)",
+                    border: "1px solid var(--line-faint)",
                     borderLeft: `3px solid ${pillar.accent}`,
                   }}
                 >
@@ -204,11 +207,14 @@ export function AIAnalysis({
                   key={i}
                   className="p-5 cog-fade-up"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.06)",
+                    background: "var(--surface-card)",
+                    border: "1px solid var(--line-faint)",
                   }}
                 >
-                  <div className="text-[10px] font-bold tracking-[0.22em] text-[#06C7CC] mb-3">
+                  <div
+                    className="text-[10px] font-bold tracking-[0.22em] mb-3"
+                    style={{ color: "var(--accent)" }}
+                  >
                     HORIZON {i + 1}
                   </div>
                   <div className="text-white text-[15px] tracking-wide mb-4">
@@ -240,12 +246,15 @@ export function AIAnalysis({
             <div
               className="p-5 cog-fade-up"
               style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.06)",
-                borderLeft: "3px solid #E84855",
+                background: "var(--surface-card)",
+                border: "1px solid var(--line-faint)",
+                borderLeft: "3px solid var(--danger)",
               }}
             >
-              <div className="text-[10px] font-bold tracking-[0.22em] text-[#E84855] mb-3">
+              <div
+                className="text-[10px] font-bold tracking-[0.22em] mb-3"
+                style={{ color: "var(--danger)" }}
+              >
                 RISK FACTORS
               </div>
               <ul className="flex flex-col gap-2.5">
@@ -264,12 +273,15 @@ export function AIAnalysis({
             <div
               className="p-5 cog-fade-up"
               style={{
-                background: "rgba(6,199,204,0.06)",
-                border: "1px solid rgba(6,199,204,0.30)",
-                borderLeft: "3px solid #06C7CC",
+                background: "var(--accent-soft)",
+                border: "1px solid var(--accent-border)",
+                borderLeft: "3px solid var(--accent)",
               }}
             >
-              <div className="text-[10px] font-bold tracking-[0.22em] text-[#06C7CC] mb-3">
+              <div
+                className="text-[10px] font-bold tracking-[0.22em] mb-3"
+                style={{ color: "var(--accent)" }}
+              >
                 HOW COGNIZANT HELPS
               </div>
               <p className="text-white/85 text-[14px] leading-relaxed font-light">
@@ -282,7 +294,10 @@ export function AIAnalysis({
 
       {streaming && analysis.executiveSummary && (
         <div className="flex items-center gap-3 text-white/55 text-[11px] uppercase tracking-[0.22em]">
-          <span className="w-2 h-2 bg-[#06C7CC] cog-pulse" />
+          <span
+            className="w-2 h-2 cog-pulse"
+            style={{ background: "var(--accent)" }}
+          />
           Streaming additional sections…
         </div>
       )}
@@ -309,7 +324,8 @@ function Section({
         <span>{label}</span>
         {streaming && (
           <span
-            className="inline-block w-1.5 h-1.5 bg-[#06C7CC] cog-pulse"
+            className="inline-block w-1.5 h-1.5 cog-pulse"
+            style={{ background: "var(--accent)" }}
             aria-hidden="true"
           />
         )}
@@ -332,7 +348,7 @@ function SubList({
     <div className="mb-3 last:mb-0">
       <div
         className="text-[10px] font-bold tracking-[0.2em] mb-1.5"
-        style={{ color: accent || "rgba(255,255,255,0.5)" }}
+        style={{ color: accent || "var(--ink-mute)" }}
       >
         {title.toUpperCase()}
       </div>
@@ -379,8 +395,8 @@ function PillarSkeleton() {
     <div
       className="p-5 flex flex-col gap-3"
       style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.06)",
+        background: "var(--surface-card)",
+        border: "1px solid var(--line-faint)",
       }}
     >
       <div className="h-2 w-16 cog-shimmer" />
@@ -396,11 +412,14 @@ function RoadmapSkeleton({ index }: { index: number }) {
     <div
       className="p-5 flex flex-col gap-3"
       style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.06)",
+        background: "var(--surface-card)",
+        border: "1px solid var(--line-faint)",
       }}
     >
-      <div className="text-[10px] font-bold tracking-[0.22em] text-[#06C7CC]">
+      <div
+        className="text-[10px] font-bold tracking-[0.22em]"
+        style={{ color: "var(--accent)" }}
+      >
         HORIZON {index + 1}
       </div>
       <div className="h-3 cog-shimmer w-[60%]" />

@@ -6,6 +6,8 @@ import { RadialGauge } from "@/components/RadialGauge";
 import { PillarBreakdown } from "@/components/PillarBreakdown";
 import { HeatmapGrid } from "@/components/HeatmapGrid";
 import { AIAnalysis } from "@/components/AIAnalysis";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { FullscreenButton } from "@/components/FullscreenButton";
 import {
   getAllPillarScores,
   getBand,
@@ -112,7 +114,7 @@ export function ReportView({
 
   return (
     <>
-      <header className="px-6 sm:px-10 pt-6 flex items-center justify-between">
+      <header className="cog-chrome px-6 sm:px-10 pt-6 flex items-center justify-between gap-3 flex-wrap">
         <CognizantLogo size={28} />
         <div className="flex items-center gap-3">
           <ShareButton
@@ -129,19 +131,24 @@ export function ReportView({
             className="px-4 py-2 text-[11px] uppercase tracking-[0.2em] font-semibold transition-all disabled:opacity-50"
             style={{
               background: "transparent",
-              border: "1px solid #06C7CC",
-              color: "#06C7CC",
+              border: "1px solid var(--accent)",
+              color: "var(--accent)",
             }}
           >
             {exporting ? "Exporting…" : "Export PDF"}
           </button>
+          <FullscreenButton />
+          <ThemeToggle />
         </div>
       </header>
 
       <main className="flex-1 px-6 sm:px-10 py-12 sm:py-16 max-w-6xl w-full mx-auto">
         <div ref={reportRef} id="results-container" className="flex flex-col gap-14">
           <section className="cog-fade-up">
-            <div className="text-[11px] uppercase tracking-[0.24em] text-[#06C7CC] mb-3">
+            <div
+              className="text-[11px] uppercase tracking-[0.24em] mb-3"
+              style={{ color: "var(--accent)" }}
+            >
               {reportLabel}
             </div>
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
@@ -202,7 +209,7 @@ export function ReportView({
 
           <div
             className="hidden print:flex pt-6 items-center justify-between"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.12)" }}
+            style={{ borderTop: "1px solid var(--line)" }}
           >
             <CognizantLogo size={20} />
             <span className="text-[10px] uppercase tracking-[0.22em] text-white/45">
@@ -300,9 +307,9 @@ function ShareButton({
       title={errorDetail ?? "Save and copy a shareable link"}
       className="px-4 py-2 text-[11px] uppercase tracking-[0.2em] font-semibold transition-all disabled:opacity-50"
       style={{
-        background: status === "copied" ? "#06C7CC" : "transparent",
-        border: "1px solid rgba(255,255,255,0.18)",
-        color: status === "copied" ? "#000028" : "rgba(255,255,255,0.85)",
+        background: status === "copied" ? "var(--accent)" : "transparent",
+        border: "1px solid var(--line-strong)",
+        color: status === "copied" ? "var(--ink-on-accent)" : "var(--ink-soft)",
       }}
     >
       {message}

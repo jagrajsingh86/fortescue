@@ -21,18 +21,32 @@ export function PillarBreakdown({ scores }: Props) {
                 >
                   {pillar.num}
                 </span>
-                <span className="text-white text-[14px] tracking-wide">{s.pillarName}</span>
+                <span
+                  className="text-[14px] tracking-wide"
+                  style={{ color: "var(--ink)" }}
+                >
+                  {s.pillarName}
+                </span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-white/55 text-[10px] uppercase tracking-[0.2em]">
+                <span
+                  className="text-[10px] uppercase tracking-[0.2em]"
+                  style={{ color: "var(--ink-mute)" }}
+                >
                   {s.band}
                 </span>
-                <span className="text-white font-medium text-[15px] tabular-nums">
+                <span
+                  className="font-medium text-[15px] tabular-nums"
+                  style={{ color: "var(--ink)" }}
+                >
                   {s.score.toFixed(1)}
                 </span>
               </div>
             </div>
-            <div className="h-[6px] w-full bg-white/[0.06]">
+            <div
+              className="h-[6px] w-full"
+              style={{ background: "var(--surface-card-strong)" }}
+            >
               <div
                 className="h-full"
                 style={{

@@ -16,19 +16,79 @@
   --font-sans: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 
-:root {
+/* ─── Theme tokens (dark default) ──────────────────────────────────── */
+:root,
+[data-theme="dark"] {
   color-scheme: dark;
+  --bg-radial: radial-gradient(ellipse at top, #00003a 0%, #000028 60%, #000018 100%);
+  --bg-solid: #000028;
+
+  --surface-card: rgba(255, 255, 255, 0.03);
+  --surface-card-strong: rgba(255, 255, 255, 0.06);
+  --surface-input: rgba(255, 255, 255, 0.04);
+  --surface-input-hover: rgba(255, 255, 255, 0.08);
+
+  --line-faint: rgba(255, 255, 255, 0.06);
+  --line: rgba(255, 255, 255, 0.10);
+  --line-strong: rgba(255, 255, 255, 0.18);
+
+  --ink: #ffffff;
+  --ink-soft: rgba(255, 255, 255, 0.85);
+  --ink-mute: rgba(255, 255, 255, 0.55);
+  --ink-faint: rgba(255, 255, 255, 0.35);
+  --ink-on-accent: #000028;
+
+  --accent: #06C7CC;
+  --accent-strong: #06C7CC;
+  --accent-soft: rgba(6, 199, 204, 0.10);
+  --accent-border: rgba(6, 199, 204, 0.35);
+
+  --danger: #E84855;
+  --warn: #F5A623;
+
+  --logo-color: #ffffff;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg-radial: radial-gradient(ellipse at top, #F7F4ED 0%, #EFE9DA 70%, #E2DAC4 100%);
+  --bg-solid: #F4EFE3;
+
+  --surface-card: rgba(0, 0, 40, 0.025);
+  --surface-card-strong: rgba(0, 0, 40, 0.05);
+  --surface-input: rgba(0, 0, 40, 0.04);
+  --surface-input-hover: rgba(0, 0, 40, 0.07);
+
+  --line-faint: rgba(0, 0, 40, 0.08);
+  --line: rgba(0, 0, 40, 0.14);
+  --line-strong: rgba(0, 0, 40, 0.28);
+
+  --ink: #000028;
+  --ink-soft: rgba(0, 0, 40, 0.78);
+  --ink-mute: rgba(0, 0, 40, 0.56);
+  --ink-faint: rgba(0, 0, 40, 0.38);
+  --ink-on-accent: #ffffff;
+
+  --accent: #058B8F;
+  --accent-strong: #047378;
+  --accent-soft: rgba(5, 139, 143, 0.10);
+  --accent-border: rgba(5, 139, 143, 0.45);
+
+  --danger: #B83341;
+  --warn: #C57A0F;
+
+  --logo-color: #000028;
 }
 
 html,
 body {
-  background:
-    radial-gradient(ellipse at top, #00003a 0%, #000028 60%, #000018 100%) fixed;
-  color: #ffffff;
+  background: var(--bg-radial) fixed;
+  color: var(--ink);
   font-family: var(--font-sans);
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  transition: background-color 250ms ease, color 250ms ease;
 }
 
 * {
@@ -43,16 +103,16 @@ textarea {
   border-radius: 0 !important;
 }
 
-/* Top gradient progress bar */
+/* Top gradient progress bar (brand colours look fine in both modes) */
 .cog-progress-track {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--line-faint);
 }
 .cog-progress-fill {
   background: linear-gradient(90deg, #06C7CC, #7373D8);
   transition: width 400ms ease;
 }
 
-/* Shimmer for skeleton */
+/* Shimmer for skeletons */
 @keyframes cog-shimmer {
   0%   { background-position: -800px 0; }
   100% { background-position: 800px 0; }
@@ -60,9 +120,9 @@ textarea {
 .cog-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(6, 199, 204, 0.10) 50%,
-    rgba(255, 255, 255, 0.04) 100%
+    var(--surface-card) 0%,
+    var(--accent-soft) 50%,
+    var(--surface-card) 100%
   );
   background-size: 800px 100%;
   animation: cog-shimmer 1.8s linear infinite;
@@ -80,9 +140,11 @@ textarea {
 }
 .cog-fade-up { animation: cog-fade-up 350ms ease-out both; }
 
+/* Selection */
+::selection { background: var(--accent-soft); color: var(--ink); }
+
 /* ─── Landing-page motion ────────────────────────────────────────── */
 
-/* Slow ambient aurora behind the headline */
 @keyframes cog-aurora {
   0%   { transform: translate3d(-4%, -2%, 0) scale(1);   opacity: 0.55; }
   50%  { transform: translate3d( 4%,  2%, 0) scale(1.08); opacity: 0.85; }
@@ -101,15 +163,20 @@ textarea {
   animation: cog-aurora 18s ease-in-out infinite;
   will-change: transform, opacity;
 }
+[data-theme="light"] .cog-aurora {
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 40%, rgba(6, 199, 204, 0.18), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 75% 55%, rgba(115, 115, 216, 0.18), transparent 60%),
+    radial-gradient(ellipse 40% 35% at 55% 30%, rgba(47, 120, 196, 0.14), transparent 60%);
+  opacity: 0.7;
+}
 
-/* Letter / line reveal — used for hero copy */
 @keyframes cog-reveal {
   from { opacity: 0; transform: translateY(14px); filter: blur(6px); }
   to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
 }
 .cog-reveal { animation: cog-reveal 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
 
-/* Hairline underline that draws in from the left */
 @keyframes cog-line-draw {
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
@@ -120,7 +187,6 @@ textarea {
   animation: cog-line-draw 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Slow horizontal sheen that traverses the CTA on hover */
 @keyframes cog-sheen {
   0%   { transform: translateX(-120%); }
   100% { transform: translateX(220%); }
@@ -151,14 +217,12 @@ textarea {
 }
 .cog-cta:hover::after { animation: cog-sheen 900ms ease forwards; }
 
-/* Pillar row entry — combined with stagger delays in JSX */
 @keyframes cog-row-in {
-  from { opacity: 0; transform: translateX(-12px); border-left-color: rgba(255,255,255,0); }
+  from { opacity: 0; transform: translateX(-12px); border-left-color: transparent; }
   to   { opacity: 1; transform: translateX(0);     border-left-color: var(--row-accent); }
 }
 .cog-row-in { animation: cog-row-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both; }
 
-/* Soft teal beat on the eyebrow */
 @keyframes cog-dot {
   0%, 100% { transform: scale(1);   opacity: 0.55; }
   50%      { transform: scale(1.4); opacity: 1;    }
@@ -181,14 +245,52 @@ textarea {
   .cog-line-draw { transform: scaleX(1); }
 }
 
-/* Selection */
-::selection { background: rgba(6, 199, 204, 0.4); color: #fff; }
+/* ─── Light-mode overrides for muted Tailwind whites ───────────────── */
+/* These classes get baked into the DOM by Tailwind v4 as
+   color-mix(in oklab, white …). They render fine on the dark theme but
+   would disappear on a light background — remap to muted-navy. */
+[data-theme="light"] .text-white                  { color: var(--ink) !important; }
+[data-theme="light"] .text-white\/85              { color: var(--ink-soft) !important; }
+[data-theme="light"] .text-white\/80              { color: rgba(0,0,40,0.80) !important; }
+[data-theme="light"] .text-white\/75              { color: rgba(0,0,40,0.75) !important; }
+[data-theme="light"] .text-white\/70              { color: rgba(0,0,40,0.72) !important; }
+[data-theme="light"] .text-white\/65              { color: rgba(0,0,40,0.68) !important; }
+[data-theme="light"] .text-white\/55              { color: var(--ink-mute) !important; }
+[data-theme="light"] .text-white\/50              { color: rgba(0,0,40,0.50) !important; }
+[data-theme="light"] .text-white\/45              { color: rgba(0,0,40,0.46) !important; }
+[data-theme="light"] .text-white\/40              { color: rgba(0,0,40,0.42) !important; }
+[data-theme="light"] .text-white\/35              { color: var(--ink-faint) !important; }
+[data-theme="light"] .text-white\/30              { color: rgba(0,0,40,0.32) !important; }
 
-/* ─── PDF export overrides ───────────────────────────────────────── */
-/* Applied only inside html2canvas-pro's cloned DOM during export.
-   Boosts muted whites and accent contrast so output isn't dim on
-   paper / in PDF viewers. */
+[data-theme="light"] .bg-white\/\[0\.04\]         { background-color: var(--surface-card) !important; }
+[data-theme="light"] .bg-white\/\[0\.06\]         { background-color: var(--surface-card-strong) !important; }
+
+[data-theme="light"] .border-white\/10            { border-color: var(--line) !important; }
+[data-theme="light"] .border-white\/12            { border-color: var(--line) !important; }
+
+/* ─── Present / fullscreen mode ───────────────────────────────────── */
+/* Hides app chrome so the report fills the screen. Driven by a
+   data-presenting attribute on <html>. */
+[data-presenting="true"] .cog-chrome { display: none !important; }
+[data-presenting="true"] body { overflow: auto; }
+[data-presenting="true"] main { padding-top: 2rem !important; }
+
+/* ─── PDF export overrides ────────────────────────────────────────── */
+/* Applied inside html2canvas-pro's cloned DOM only. Forces dark theme
+   for the PDF so the cover always looks like the on-screen brand,
+   regardless of which theme the user is viewing. */
 .pdf-export-mode {
+  --bg-solid: #000028;
+  --surface-card: rgba(255, 255, 255, 0.06);
+  --surface-card-strong: rgba(255, 255, 255, 0.10);
+  --line-faint: rgba(255, 255, 255, 0.18);
+  --line: rgba(255, 255, 255, 0.22);
+  --line-strong: rgba(255, 255, 255, 0.30);
+  --ink: #ffffff;
+  --ink-soft: rgba(255, 255, 255, 0.95);
+  --ink-mute: rgba(255, 255, 255, 0.80);
+  --ink-faint: rgba(255, 255, 255, 0.65);
+  --logo-color: #ffffff;
   background: #000028 !important;
 }
 .pdf-export-mode .text-white\/85 { color: rgba(255,255,255,0.98) !important; }
@@ -202,18 +304,13 @@ textarea {
 .pdf-export-mode .text-white\/40 { color: rgba(255,255,255,0.68) !important; }
 .pdf-export-mode .text-white\/35 { color: rgba(255,255,255,0.65) !important; }
 .pdf-export-mode .text-white\/30 { color: rgba(255,255,255,0.60) !important; }
-
-.pdf-export-mode .border-white\/10  { border-color: rgba(255,255,255,0.22) !important; }
-.pdf-export-mode .border-white\/12  { border-color: rgba(255,255,255,0.24) !important; }
-
+.pdf-export-mode .border-white\/10 { border-color: rgba(255,255,255,0.22) !important; }
+.pdf-export-mode .border-white\/12 { border-color: rgba(255,255,255,0.24) !important; }
 .pdf-export-mode .bg-white\/\[0\.04\] { background-color: rgba(255,255,255,0.06) !important; }
 .pdf-export-mode .bg-white\/\[0\.06\] { background-color: rgba(255,255,255,0.08) !important; }
-
-/* Suppress motion/animations in the captured clone */
 .pdf-export-mode *,
 .pdf-export-mode *::before,
 .pdf-export-mode *::after {
   animation: none !important;
   transition: none !important;
 }
-.pdf-export-mode .cog-aurora { display: none !important; }

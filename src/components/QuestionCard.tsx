@@ -28,7 +28,6 @@ export function QuestionCard({
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      // Don't intercept while user is typing in an input/textarea
       const target = e.target as HTMLElement | null;
       if (
         target &&
@@ -41,7 +40,6 @@ export function QuestionCard({
 
       if (pending !== null) return;
 
-      // 1–5 selects option A–E
       if (e.key >= "1" && e.key <= "5") {
         const i = Number(e.key) - 1;
         const opt = question.options[i];
@@ -52,7 +50,6 @@ export function QuestionCard({
         return;
       }
 
-      // Backspace or ArrowLeft → previous question
       if ((e.key === "Backspace" || e.key === "ArrowLeft") && onPrevious) {
         e.preventDefault();
         onPrevious();
@@ -72,7 +69,10 @@ export function QuestionCard({
 
   return (
     <div className="cog-fade-up">
-      <h2 className="font-normal text-white text-[22px] leading-snug mb-8 max-w-3xl">
+      <h2
+        className="font-normal text-[22px] leading-snug mb-8 max-w-3xl"
+        style={{ color: "var(--ink)" }}
+      >
         {question.q}
       </h2>
 
@@ -87,15 +87,15 @@ export function QuestionCard({
                 onClick={() => handleClick(opt.score)}
                 className="w-full text-left flex items-start gap-4 px-5 py-4 transition-all duration-200 disabled:cursor-default group"
                 style={{
-                  background: isSelected ? "rgba(6,199,204,0.10)" : "rgba(255,255,255,0.04)",
-                  border: `1px solid ${isSelected ? accent : "rgba(255,255,255,0.08)"}`,
+                  background: isSelected ? "var(--accent-soft)" : "var(--surface-card)",
+                  border: `1px solid ${isSelected ? accent : "var(--line-faint)"}`,
                   borderLeftWidth: 3,
-                  borderLeftColor: isSelected ? accent : "rgba(255,255,255,0.10)",
+                  borderLeftColor: isSelected ? accent : "var(--line)",
                 }}
               >
                 <span
                   className="font-bold text-[11px] tracking-[0.16em] mt-[3px] flex items-center gap-1.5"
-                  style={{ color: isSelected ? accent : "rgba(255,255,255,0.45)" }}
+                  style={{ color: isSelected ? accent : "var(--ink-faint)" }}
                 >
                   {LETTERS[i]}
                   <span
@@ -105,7 +105,10 @@ export function QuestionCard({
                     [{i + 1}]
                   </span>
                 </span>
-                <span className="text-white/85 text-[15px] leading-relaxed font-light flex-1">
+                <span
+                  className="text-[15px] leading-relaxed font-light flex-1"
+                  style={{ color: "var(--ink-soft)" }}
+                >
                   {opt.text}
                 </span>
               </button>
@@ -114,13 +117,45 @@ export function QuestionCard({
         })}
       </ul>
 
-      <div className="mt-6 text-[10px] uppercase tracking-[0.22em] text-white/35 flex items-center gap-4">
+      <div
+        className="mt-6 text-[10px] uppercase tracking-[0.22em] flex items-center gap-4"
+        style={{ color: "var(--ink-faint)" }}
+      >
         <span>
-          Press <kbd className="px-1.5 py-0.5 bg-white/[0.06] border border-white/10 font-mono">1</kbd>–<kbd className="px-1.5 py-0.5 bg-white/[0.06] border border-white/10 font-mono">5</kbd> to select
+          Press{" "}
+          <kbd
+            className="px-1.5 py-0.5 font-mono"
+            style={{
+              background: "var(--surface-card-strong)",
+              border: "1px solid var(--line)",
+            }}
+          >
+            1
+          </kbd>
+          –
+          <kbd
+            className="px-1.5 py-0.5 font-mono"
+            style={{
+              background: "var(--surface-card-strong)",
+              border: "1px solid var(--line)",
+            }}
+          >
+            5
+          </kbd>{" "}
+          to select
         </span>
         {onPrevious && (
           <span>
-            <kbd className="px-1.5 py-0.5 bg-white/[0.06] border border-white/10 font-mono">←</kbd> previous
+            <kbd
+              className="px-1.5 py-0.5 font-mono"
+              style={{
+                background: "var(--surface-card-strong)",
+                border: "1px solid var(--line)",
+              }}
+            >
+              ←
+            </kbd>{" "}
+            previous
           </span>
         )}
       </div>
